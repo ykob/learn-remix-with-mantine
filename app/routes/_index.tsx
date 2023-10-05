@@ -1,10 +1,20 @@
-import { Card, CloseButton, Container, Flex, Text, Title } from "@mantine/core";
+import {
+  Button,
+  Card,
+  CloseButton,
+  Container,
+  Flex,
+  Grid,
+  Text,
+  Textarea,
+  Title,
+} from "@mantine/core";
 import {
   json,
   type LoaderFunctionArgs,
   type MetaFunction,
 } from "@remix-run/node";
-import { useLoaderData } from "@remix-run/react";
+import { Form, useLoaderData } from "@remix-run/react";
 import { getMemos } from "~/data";
 
 export const meta: MetaFunction = () => {
@@ -21,21 +31,43 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
 
 export default function Index() {
   const { memos } = useLoaderData<typeof loader>();
+
   return (
-    <Container size="sm" pt="xl" pb="xl">
+    <Container size="xl" pt="xl" pb="xl">
       <Title mb="xl" c="white">
         Memo
       </Title>
-      <Flex direction="column" gap="lg">
-        {memos.map((o) => (
-          <Card key={o.id} padding="lg" shadow="sm">
-            <Flex gap="md">
-              <Text>{o.text}</Text>
-              <CloseButton />
-            </Flex>
-          </Card>
-        ))}
-      </Flex>
+      <Grid columns={2}>
+        <Grid.Col span={{ base: 2, md: 1 }}>
+          <Form>
+            <Card padding="lg" shadow="sm">
+              <Flex direction="column" gap="lg">
+                <Textarea
+                  label="Add a memo"
+                  styles={{
+                    input: {
+                      height: "240px",
+                    },
+                  }}
+                />
+                <Button>Submit</Button>
+              </Flex>
+            </Card>
+          </Form>
+        </Grid.Col>
+        <Grid.Col span={{ base: 2, md: 1 }}>
+          <Flex direction="column" gap="lg">
+            {memos.map((o) => (
+              <Card key={o.id} padding="lg" shadow="sm">
+                <Flex gap="md">
+                  <Text>{o.text}</Text>
+                  <CloseButton />
+                </Flex>
+              </Card>
+            ))}
+          </Flex>
+        </Grid.Col>
+      </Grid>
     </Container>
   );
 }
