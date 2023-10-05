@@ -52,8 +52,8 @@ export async function getMemos() {
   return memos.sort(sortBy("last", "createdAt"));
 }
 
-export async function createEmptyMemo() {
-  const memo = await fakeMemo.create({});
+export async function createNewMemo(updates: MemoMutation) {
+  const memo = await fakeMemo.create({ ...updates });
   return memo;
 }
 
