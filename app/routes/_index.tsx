@@ -100,8 +100,13 @@ export default function Index() {
           <Flex direction="column" gap="lg">
             {memos.map((o) => (
               <Card key={o.id} padding="lg" shadow="sm">
-                <Flex gap="md">
-                  <Text>{o.text}</Text>
+                <Flex gap="md" justify="space-between">
+                  <Flex direction="column" gap="md">
+                    <Text>{o.text}</Text>
+                    <Text c="gray" size="xs">
+                      {o.createdAt}
+                    </Text>
+                  </Flex>
                   <CloseButton />
                 </Flex>
               </Card>
