@@ -39,8 +39,21 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
 export const action = async ({ params, request }: ActionFunctionArgs) => {
   const formData = await request.formData();
   const updates = Object.fromEntries(formData);
-  const memo = await createNewMemo(updates);
-  return json({ memo, success: true });
+  let error = null;
+  let memo = null;
+  let success = false;
+
+  try {
+    memo = await createNewMemo(updates);
+    success = true;
+  } catch (e) {
+    error = e instanceof Error ? e.message : "Occuered unknown error.";
+  }
+  return json({
+    error,
+    memo,
+    success,
+  });
 };
 
 export default function Index() {
@@ -77,6 +90,7 @@ export default function Index() {
                     },
                   }}
                 />
+                {actionData?.error && <div>{actionData?.error}</div>}
                 <Button type="submit">Submit</Button>
               </Flex>
             </Card>
