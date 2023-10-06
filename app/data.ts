@@ -52,7 +52,7 @@ export async function getMemos() {
 
 export async function createNewMemo(updates: MemoMutation) {
   if (!updates.text) {
-    throw new Error(`Text input is required.`);
+    throw new Error(`Memote text is required.`);
   }
   const memo = await fakeMemo.create({ ...updates });
   return memo;
