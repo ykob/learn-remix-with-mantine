@@ -1,11 +1,9 @@
 import {
   Button,
   Card,
-  CloseButton,
   Container,
   Flex,
   Grid,
-  Text,
   Textarea,
   Title,
 } from "@mantine/core";
@@ -23,6 +21,7 @@ import {
 } from "@remix-run/react";
 import { useEffect, useRef } from "react";
 import { createNewMemo, getMemos } from "~/data";
+import { MemoCard } from "~/components/ui/";
 
 export const meta: MetaFunction = () => {
   return [
@@ -99,17 +98,7 @@ export default function Index() {
         <Grid.Col span={{ base: 2, md: 1 }}>
           <Flex direction="column" gap="lg">
             {memos.map((o) => (
-              <Card key={o.id} padding="lg" shadow="sm">
-                <Flex gap="md" justify="space-between">
-                  <Flex direction="column" gap="md">
-                    <Text>{o.text}</Text>
-                    <Text c="gray" size="xs">
-                      {o.createdAt}
-                    </Text>
-                  </Flex>
-                  <CloseButton />
-                </Flex>
-              </Card>
+              <MemoCard key={o.id} memo={o} />
             ))}
           </Flex>
         </Grid.Col>
