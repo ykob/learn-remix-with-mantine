@@ -15,9 +15,7 @@ const fakeMemo = {
   records: {} as Record<string, MemoRecord>,
 
   async getAll(): Promise<MemoRecord[]> {
-    return Object.keys(fakeMemo.records)
-      .map((key) => fakeMemo.records[key])
-      .sort(sortBy("-createdAt", "last"));
+    return Object.keys(fakeMemo.records).map((key) => fakeMemo.records[key]);
   },
 
   async get(id: string): Promise<MemoRecord | null> {
@@ -49,7 +47,7 @@ const fakeMemo = {
 export async function getMemos() {
   await new Promise((resolve) => setTimeout(resolve, 500));
   let memos = await fakeMemo.getAll();
-  return memos.sort(sortBy("last", "createdAt"));
+  return memos.sort(sortBy("-createdAt"));
 }
 
 export async function createNewMemo(updates: MemoMutation) {
