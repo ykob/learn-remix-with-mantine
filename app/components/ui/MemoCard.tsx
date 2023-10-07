@@ -1,8 +1,10 @@
 import { Card, CloseButton, Flex, Text } from "@mantine/core";
-import { Form } from "@remix-run/react";
+import { useFetcher } from "@remix-run/react";
 import { type MemoRecord } from "~/data";
 
 export default function MemoCard({ memo }: { memo: MemoRecord }) {
+  const fetcher = useFetcher();
+
   return (
     <Card padding="lg" shadow="sm">
       <Flex gap="md" justify="space-between">
@@ -12,9 +14,10 @@ export default function MemoCard({ memo }: { memo: MemoRecord }) {
             {memo.createdAt}
           </Text>
         </Flex>
-        <Form method="delete" action={`memo/${memo.id}/destroy`}>
+        <fetcher.Form method="delete" action={`memo/${memo.id}/destroy/`}>
+          <input type="hidden" name="id" value={memo.id} />
           <CloseButton type="submit" />
-        </Form>
+        </fetcher.Form>
       </Flex>
     </Card>
   );
