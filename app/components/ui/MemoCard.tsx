@@ -5,6 +5,13 @@ import { type MemoRecord } from "~/data";
 export default function MemoCard({ memo }: { memo: MemoRecord }) {
   const fetcher = useFetcher();
 
+  const handleDelete = async () => {
+    await fetcher.submit(null, {
+      method: "delete",
+      action: `memo/${memo.id}/destroy/`,
+    });
+  };
+
   return (
     <Card padding="lg" shadow="sm">
       <Flex gap="md" justify="space-between">
@@ -14,10 +21,7 @@ export default function MemoCard({ memo }: { memo: MemoRecord }) {
             {memo.createdAt}
           </Text>
         </Flex>
-        <fetcher.Form method="delete" action={`memo/${memo.id}/destroy/`}>
-          <input type="hidden" name="id" value={memo.id} />
-          <CloseButton type="submit" />
-        </fetcher.Form>
+        <CloseButton onClick={handleDelete} type="submit" />
       </Flex>
     </Card>
   );
