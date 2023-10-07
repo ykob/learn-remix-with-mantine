@@ -58,8 +58,8 @@ export const action = async ({ request }: ActionFunctionArgs) => {
 export default function Index() {
   const actionData = useActionData<typeof action>();
   const { memos } = useLoaderData<typeof loader>();
-  const form = useRef<HTMLFormElement>(null);
   const navigation = useNavigation();
+  const form = useRef<HTMLFormElement>(null);
 
   useEffect(
     function resetFormOnSuccess() {
@@ -90,7 +90,9 @@ export default function Index() {
                   }}
                 />
                 {actionData?.error && <div>{actionData?.error}</div>}
-                <Button type="submit">Submit</Button>
+                <Button type="submit" loading={navigation.state !== "idle"}>
+                  Submit
+                </Button>
               </Flex>
             </Card>
           </Form>
