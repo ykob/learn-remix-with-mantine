@@ -4,24 +4,20 @@ import {
   Container,
   Flex,
   Grid,
+  Text,
   Textarea,
   Title,
 } from "@mantine/core";
 import {
   json,
-  type ActionFunctionArgs,
   type LoaderFunctionArgs,
   type MetaFunction,
 } from "@remix-run/node";
-import {
-  Form,
-  useActionData,
-  useLoaderData,
-  useNavigation,
-} from "@remix-run/react";
+import { useFetcher, useLoaderData, useNavigation } from "@remix-run/react";
 import { useEffect, useRef } from "react";
-import { createNewMemo, getMemos } from "~/data";
+import { getMemos } from "~/data";
 import { MemoCard } from "~/components/ui/";
+import { type action as createMemoAction } from "./memo.create";
 
 export const meta: MetaFunction = () => {
   return [
@@ -35,39 +31,20 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
   return json({ memos });
 };
 
-export const action = async ({ request }: ActionFunctionArgs) => {
-  const formData = await request.formData();
-  const updates = Object.fromEntries(formData);
-  let error = null;
-  let memo = null;
-  let success = false;
-
-  try {
-    memo = await createNewMemo(updates);
-    success = true;
-  } catch (e) {
-    error = e instanceof Error ? e.message : "Occuered unknown error.";
-  }
-  return json({
-    error,
-    memo,
-    success,
-  });
-};
-
 export default function Index() {
-  const actionData = useActionData<typeof action>();
+  const fetcher = useFetcher<typeof createMemoAction>();
   const { memos } = useLoaderData<typeof loader>();
   const navigation = useNavigation();
   const form = useRef<HTMLFormElement>(null);
 
   useEffect(
     function resetFormOnSuccess() {
-      if (navigation.state === "idle" && actionData?.success) {
+      console.log(fetcher.formData);
+      if (navigation.state === "idle" && fetcher.data?.success) {
         form.current?.reset();
       }
     },
-    [navigation.state, actionData]
+    [navigation.state, fetcher.data]
   );
 
   return (
@@ -77,7 +54,7 @@ export default function Index() {
       </Title>
       <Grid columns={2}>
         <Grid.Col span={{ base: 2, md: 1 }}>
-          <Form method="post" ref={form}>
+          <fetcher.Form method="post" ref={form} action="/memo/create">
             <Card padding="lg" shadow="sm">
               <Flex direction="column" gap="lg">
                 <Textarea
@@ -89,13 +66,15 @@ export default function Index() {
                     },
                   }}
                 />
-                {actionData?.error && <div>{actionData?.error}</div>}
+                {fetcher.data?.error && (
+                  <Text c="red">{fetcher.data?.error}</Text>
+                )}
                 <Button type="submit" loading={navigation.state !== "idle"}>
                   Submit
                 </Button>
               </Flex>
             </Card>
-          </Form>
+          </fetcher.Form>
         </Grid.Col>
         <Grid.Col span={{ base: 2, md: 1 }}>
           <Flex direction="column" gap="lg">
