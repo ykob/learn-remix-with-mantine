@@ -13,7 +13,7 @@ import {
   type LoaderFunctionArgs,
   type MetaFunction,
 } from "@remix-run/node";
-import { useFetcher, useLoaderData, useNavigation } from "@remix-run/react";
+import { useFetcher, useLoaderData } from "@remix-run/react";
 import { useEffect, useRef } from "react";
 import { getMemos } from "~/data";
 import { MemoCard } from "~/components/ui/";
@@ -34,17 +34,15 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
 export default function Index() {
   const fetcher = useFetcher<typeof createMemoAction>();
   const { memos } = useLoaderData<typeof loader>();
-  const navigation = useNavigation();
   const form = useRef<HTMLFormElement>(null);
 
   useEffect(
     function resetFormOnSuccess() {
-      console.log(fetcher.formData);
-      if (navigation.state === "idle" && fetcher.data?.success) {
+      if (fetcher.state === "idle" && fetcher.data?.success) {
         form.current?.reset();
       }
     },
-    [navigation.state, fetcher.data]
+    [fetcher.state, fetcher.data]
   );
 
   return (
@@ -69,7 +67,7 @@ export default function Index() {
                 {fetcher.data?.error && (
                   <Text c="red">{fetcher.data?.error}</Text>
                 )}
-                <Button type="submit" loading={navigation.state !== "idle"}>
+                <Button type="submit" loading={fetcher.state !== "idle"}>
                   Submit
                 </Button>
               </Flex>
