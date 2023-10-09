@@ -27,6 +27,7 @@ const fakeMemo = {
     const createdAt = new Date().toISOString();
     const newMemo = { id, createdAt, ...values };
     fakeMemo.records[id] = newMemo;
+    await new Promise((resolve) => setTimeout(resolve, 500));
     return newMemo;
   },
 
