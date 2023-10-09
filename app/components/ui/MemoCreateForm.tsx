@@ -30,7 +30,7 @@ export default function MemoCreateForm() {
             }}
           />
           {fetcher.data?.error && <Text c="red">{fetcher.data?.error}</Text>}
-          <Button type="submit" loading={fetcher.state !== "idle"}>
+          <Button type="submit" loading={fetcher.state === "submitting"}>
             Submit
           </Button>
         </Flex>
