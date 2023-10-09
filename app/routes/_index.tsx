@@ -28,7 +28,7 @@ export default function Index() {
       <Title mb="xl" c="white">
         Memo
       </Title>
-      <Grid columns={2}>
+      <Grid columns={2} gutter="xl">
         <Grid.Col span={{ base: 2, md: 1 }}>
           <MemoCreateForm />
         </Grid.Col>
