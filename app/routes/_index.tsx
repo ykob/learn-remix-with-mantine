@@ -1,9 +1,5 @@
 import { Container, Flex, Grid, Title } from "@mantine/core";
-import {
-  json,
-  type LoaderFunctionArgs,
-  type MetaFunction,
-} from "@remix-run/node";
+import { json, type MetaFunction } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
 import { getMemos } from "~/data";
 import { MemoCreateForm, MemoCard } from "~/components/ui/";
@@ -15,7 +11,7 @@ export const meta: MetaFunction = () => {
   ];
 };
 
-export const loader = async ({ request }: LoaderFunctionArgs) => {
+export const loader = async () => {
   const memos = await getMemos();
   return json({ memos });
 };
