@@ -11,6 +11,7 @@ export const meta: MetaFunction = () => {
 
 export default function DrawerIndex() {
   const [opened, setOpened] = useState(false);
+
   const open = () => setOpened(true);
   const close = () => setOpened(false);
 

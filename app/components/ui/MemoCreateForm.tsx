@@ -1,7 +1,7 @@
 import { Button, Card, Flex, Text, Textarea } from "@mantine/core";
 import { useFetcher } from "@remix-run/react";
 import { useEffect, useRef } from "react";
-import { type action as createMemoAction } from "~/routes/memo.create";
+import { type action as createMemoAction } from "~/routes/memo.create/route";
 
 export default function MemoCreateForm() {
   const fetcher = useFetcher<typeof createMemoAction>();
@@ -17,7 +17,7 @@ export default function MemoCreateForm() {
   );
 
   return (
-    <fetcher.Form method="post" ref={form} action="/memo/create">
+    <fetcher.Form method="post" ref={form} action="/memo/create/">
       <Card padding="lg" shadow="sm">
         <Flex direction="column" gap="lg">
           <Textarea
