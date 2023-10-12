@@ -1,11 +1,11 @@
 import { Button, Card, Container, Flex, Title } from "@mantine/core";
-import { useStore } from "jotai";
+import { useSetAtom } from "jotai";
 import { openDrawerAtom } from "./atom";
 
 export default function Content() {
-  const store = useStore();
+  const setOpened = useSetAtom(openDrawerAtom);
 
-  const open = () => store.set(openDrawerAtom, true);
+  const open = () => setOpened(true);
 
   return (
     <Container size="sm" pt="xl" pb="xl">

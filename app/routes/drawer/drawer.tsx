@@ -1,12 +1,11 @@
 import { Drawer as MantineDrawer, Title } from "@mantine/core";
-import { useAtom, useStore } from "jotai";
+import { useAtom } from "jotai";
 import { openDrawerAtom } from "./atom";
 
 export default function Drawer() {
-  const [opened] = useAtom(openDrawerAtom);
-  const store = useStore();
+  const [opened, setOpened] = useAtom(openDrawerAtom);
 
-  const close = () => store.set(openDrawerAtom, false);
+  const close = () => setOpened(false);
 
   return (
     <MantineDrawer opened={opened} onClose={close}>
