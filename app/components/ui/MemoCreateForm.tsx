@@ -9,11 +9,11 @@ export default function MemoCreateForm() {
 
   useEffect(
     function resetFormOnSuccess() {
-      if (fetcher.state === "idle" && fetcher.data?.success) {
+      if (fetcher.data?.success) {
         form.current?.reset();
       }
     },
-    [fetcher.state, fetcher.data]
+    [fetcher.data]
   );
 
   return (
