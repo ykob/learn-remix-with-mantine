@@ -8,7 +8,7 @@ export default function MemoCard({ memo }: { memo: MemoRecord }) {
   const handleDelete = async () => {
     await fetcher.submit(null, {
       method: "delete",
-      action: `memo/${memo.id}/destroy/`,
+      action: `/api/memo/${memo.id}/destroy/`,
     });
   };
 

@@ -17,7 +17,7 @@ export default function MemoCreateForm() {
   );
 
   return (
-    <fetcher.Form method="post" ref={form} action="/memo/create/">
+    <fetcher.Form method="post" ref={form} action="/api/memo/create/">
       <Card padding="lg" shadow="sm">
         <Flex direction="column" gap="lg">
           <Textarea
