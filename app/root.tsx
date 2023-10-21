@@ -1,7 +1,7 @@
 import "@mantine/core/styles.css";
 import "./global.css";
 
-import { MantineProvider, type MantineThemeOverride } from "@mantine/core";
+import { MantineProvider } from "@mantine/core";
 import { cssBundleHref } from "@remix-run/css-bundle";
 import { type LinksFunction } from "@remix-run/node";
 import {
@@ -12,8 +12,7 @@ import {
   Scripts,
   ScrollRestoration,
 } from "@remix-run/react";
-
-const theme: MantineThemeOverride = {};
+import { theme } from "./theme";
 
 export const links: LinksFunction = () => [
   ...(cssBundleHref ? [{ rel: "stylesheet", href: cssBundleHref }] : []),
